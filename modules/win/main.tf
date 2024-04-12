@@ -7,6 +7,7 @@ terraform {
   }
 }
 
+
 resource "proxmox_virtual_environment_vm" "node" {
   name                = var.name
   on_boot             = var.autostart
@@ -62,7 +63,6 @@ resource "proxmox_virtual_environment_vm" "node" {
       username = var.user
     }*/
   }
-
 }
 
 data "external" "address" {
