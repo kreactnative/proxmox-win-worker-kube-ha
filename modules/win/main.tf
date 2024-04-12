@@ -21,7 +21,7 @@ resource "proxmox_virtual_environment_vm" "node" {
   }
 
   disk {
-    datastore_id = var.linux_storage_name
+    datastore_id = var.storage_name
     interface    = "scsi0"
     size         = 120
   }
@@ -39,17 +39,17 @@ resource "proxmox_virtual_environment_vm" "node" {
 
   clone {
     retries = 3
-    vm_id   = var.linux_template_id
+    vm_id   = var.template_id
   }
 
   network_device {
-    model  = "virtio"
+    model  = "e1000"
     bridge = var.default_bridge
   }
 
   initialization {
-    datastore_id = var.linux_storage_name
-    ip_config {
+    datastore_id = var.storage_name
+    /*ip_config {
       ipv4 {
         address = "dhcp"
       }
@@ -57,8 +57,7 @@ resource "proxmox_virtual_environment_vm" "node" {
         address = "dhcp"
       }
     }
-
-    /*user_account {
+    user_account {
       keys     = [var.ssh_key]
       username = var.user
     }*/

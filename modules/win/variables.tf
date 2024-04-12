@@ -40,9 +40,9 @@ variable "target_node" {
   description = "Target node name in proxmox"
   type        = string
 }
-variable "linux_template_id" {
+variable "template_id" {
   type        = string
 }
-variable "linux_storage_name" {
+variable "storage_name" {
   type        = string
 }
