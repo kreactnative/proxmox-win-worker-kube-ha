@@ -79,12 +79,30 @@ variable "worker_config" {
   })
 }
 
+variable "win_worker_config" {
+  description = "Kubernetes win worker config"
+  type = object({
+    memory  = string
+    vcpus   = number
+    sockets = number
+  })
+}
+
 variable "linux_template_id" {
-  type        = string
+  type = string
 }
 variable "linux_storage_name" {
-  type        = string
+  type = string
 }
 variable "windows_template_id" {
-  type        = string
+  type = string
+}
+variable "WIN_WORKER_COUNT" {
+  type = number
+}
+variable "win_linux_template_id" {
+  type = string
+}
+variable "win_linux_storage_name" {
+  type = string
 }

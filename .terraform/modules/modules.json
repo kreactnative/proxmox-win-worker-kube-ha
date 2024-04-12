@@ -1,1 +1,1 @@
-{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"master_domain","Source":"./modules/linux","Dir":"modules/linux"},{"Key":"worker_domain","Source":"./modules/linux","Dir":"modules/linux"}]}
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"master_domain","Source":"./modules/linux","Dir":"modules/linux"},{"Key":"win_worker_domain","Source":"./modules/win","Dir":"modules/win"},{"Key":"worker_domain","Source":"./modules/linux","Dir":"modules/linux"}]}

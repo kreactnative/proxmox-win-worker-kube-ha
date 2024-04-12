@@ -31,3 +31,12 @@ worker_config = {
 linux_template_id   = "1031"
 windows_template_id = "107"
 linux_storage_name  = "local-zfs"
+
+WIN_WORKER_COUNT       = 2
+win_linux_template_id  = 109
+win_linux_storage_name = "local-zfs"
+win_worker_config = {
+  memory  = "8192"
+  vcpus   = 4
+  sockets = 1
+}
