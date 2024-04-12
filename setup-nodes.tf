@@ -14,6 +14,7 @@ resource "null_resource" "setup_master_nodes" {
   provisioner "remote-exec" {
     inline = [
       "sudo chmod +x /tmp/setup-k8s.sh",
+      "sudo sh -c  \"echo '${module.master_domain[count.index].address} ${module.master_domain[count.index].name}' > /etc/hosts\"",
       "sudo /tmp/setup-k8s.sh"
     ]
     connection {
@@ -41,6 +42,7 @@ resource "null_resource" "setup_work_nodes" {
   provisioner "remote-exec" {
     inline = [
       "sudo chmod +x /tmp/setup-k8s.sh",
+      "sudo sh -c  \"echo '${module.worker_domain[count.index].address} ${module.worker_domain[count.index].name}' > /etc/hosts\"",
       "sudo /tmp/setup-k8s.sh"
     ]
     connection {

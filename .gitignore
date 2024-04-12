@@ -46,3 +46,4 @@ calicoctl
 tigera-operator.yaml
 custom-resources.yaml
 terraform.tfvars
+kube-config

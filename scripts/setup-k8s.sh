@@ -84,4 +84,4 @@ sudo systemctl start nfs-client.target
 sudo systemctl enable nfs-client.target
 sudo systemctl status nfs-client.target --no-pager
 
-sudo /bin/sh -c 'echo $(hostname -i | xargs -n1 | grep ^10.) $(hostname) >> /etc/hosts'
+#sudo /bin/sh -c 'echo $(hostname -i | xargs -n1 | grep ^10.) $(hostname) >> /etc/hosts'
