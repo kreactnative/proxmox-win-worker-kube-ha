@@ -20,7 +20,7 @@ provider "proxmox" {
 
 resource "null_resource" "cleanup" {
   provisioner "local-exec" {
-    command     = "mkdir -p output && rm -f join-worker.sh kube-config"
+    command     = "mkdir -p output && rm -f join-worker.sh kube-config calicoctl custom-resources.yaml tigera-operator.yaml"
     working_dir = path.root
   }
 }
