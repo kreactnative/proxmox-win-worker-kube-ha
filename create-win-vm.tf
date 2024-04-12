@@ -1,7 +1,7 @@
 module "win_worker_domain" {
   source             = "./modules/win"
   count              = var.WIN_WORKER_COUNT
-  name               = format("terraform-win-worker-%s", count.index + 1)
+  name               = format("w2022-worker-0%s", count.index + 1)
   memory             = var.win_worker_config.memory
   vcpus              = var.win_worker_config.vcpus
   sockets            = var.win_worker_config.sockets

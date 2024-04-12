@@ -47,6 +47,7 @@ resource "null_resource" "copy_master_config" {
   provisioner "remote-exec" {
     inline = [
       "sudo dnf install sshpass -y",
+      "sleep 30",
       "sudo sshpass -p 'Kdotnet34567@' ssh -o StrictHostKeyChecking=no administrator@${module.win_worker_domain[count.index].address} 'mkdir c:\\k'",
       "sudo sshpass -p 'Kdotnet34567@' scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r /root/.kube administrator@${module.win_worker_domain[count.index].address}:/users/administrator",
       "sudo sshpass -p 'Kdotnet34567@' scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r /root/.kube/config administrator@${module.win_worker_domain[count.index].address}:/k/",
@@ -63,6 +64,7 @@ resource "null_resource" "copy_master_config" {
   provisioner "remote-exec" {
     inline = [
       "sudo dnf install sshpass -y",
+      "sleep 20",
       "sudo sshpass -p 'Kdotnet34567@' ssh -o StrictHostKeyChecking=no administrator@${module.win_worker_domain[count.index].address} 'powershell c:\\users\\administrator\\join_win_worker.ps1'"
     ]
     connection {

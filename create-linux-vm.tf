@@ -28,7 +28,7 @@ resource "null_resource" "cleanup" {
 module "master_domain" {
   source             = "./modules/linux"
   count              = var.MASTER_COUNT
-  name               = format("terraform-master-%s", count.index + 1)
+  name               = format("master-0%s", count.index + 1)
   memory             = var.master_config.memory
   vcpus              = var.master_config.vcpus
   sockets            = var.master_config.sockets
@@ -44,7 +44,7 @@ module "master_domain" {
 module "worker_domain" {
   source             = "./modules/linux"
   count              = var.WORKER_COUNT
-  name               = format("terraform-worker-%s", count.index + 1)
+  name               = format("worker-0%s", count.index + 1)
   memory             = var.worker_config.memory
   vcpus              = var.worker_config.vcpus
   sockets            = var.worker_config.sockets
