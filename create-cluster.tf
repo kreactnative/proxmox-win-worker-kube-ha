@@ -26,6 +26,9 @@ resource "null_resource" "init_master" {
   provisioner "local-exec" {
     command = "scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/.ssh/id_rsa ${var.user}@${module.master_domain[0].address}:/tmp/config $HOME/.kube/proxmox-terraform-k8s-win-worker"
   }
+    provisioner "local-exec" {
+    command = "scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/.ssh/id_rsa ${var.user}@${module.master_domain[0].address}:/tmp/config  ${path.cwd}/kube-config"
+  }
   provisioner "local-exec" {
     command = "scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/.ssh/id_rsa ${var.user}@${module.master_domain[0].address}:/tmp/join-worker.sh join-worker.sh"
   }
