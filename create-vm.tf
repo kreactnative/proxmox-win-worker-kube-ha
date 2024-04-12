@@ -20,7 +20,7 @@ provider "proxmox" {
 
 resource "null_resource" "cleanup" {
   provisioner "local-exec" {
-    command     = "mkdir -p output"
+    command     = "mkdir -p output && rm -f join-worker.sh"
     working_dir = path.root
   }
 }
