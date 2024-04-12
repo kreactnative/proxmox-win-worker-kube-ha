@@ -43,3 +43,5 @@ join-master.sh
 join-worker.sh
 helm-cni-lb.sh
 calicoctl
+tigera-operator.yaml
+custom-resources.yaml
