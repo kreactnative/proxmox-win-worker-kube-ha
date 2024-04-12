@@ -45,3 +45,4 @@ helm-cni-lb.sh
 calicoctl
 tigera-operator.yaml
 custom-resources.yaml
+terraform.tfvars
