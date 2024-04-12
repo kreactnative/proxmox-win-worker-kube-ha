@@ -1,0 +1,1 @@
+proxmox terraform windows worker
