@@ -4,8 +4,8 @@ resource "null_resource" "rename_win_worker" {
   provisioner "remote-exec" {
     inline = [
       "sudo dnf install sshpass -y",
-      "rm -rf /tmp/rename_win_worker.ps1 && echo Rename-Computer -NewName ${module.win_worker_domain[count.index].name} -Restart >> /tmp/rename_win_worker.ps1",
-      "sudo sshpass -p 'Kdotnet34567@' scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r /tmp/rename_win_worker.ps1 administrator@${module.win_worker_domain[count.index].address}:/users/administrator",
+      "rm -rf /tmp/rename_win_worker${count.index}.ps1 && echo Rename-Computer -NewName ${module.win_worker_domain[count.index].name} -Restart >> /tmp/rename_win_worker${count.index}.ps1",
+      "sudo sshpass -p 'Kdotnet34567@' scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r /tmp/rename_win_worker${count.index}.ps1 administrator@${module.win_worker_domain[count.index].address}:/users/administrator",
     ]
     connection {
       type        = "ssh"
@@ -18,7 +18,7 @@ resource "null_resource" "rename_win_worker" {
   provisioner "remote-exec" {
     inline = [
       "sudo dnf install sshpass -y",
-      "sudo sshpass -p 'Kdotnet34567@' ssh -o StrictHostKeyChecking=no administrator@${module.win_worker_domain[count.index].address} 'powershell c:\\users\\administrator\\rename_win_worker.ps1'"
+      "sudo sshpass -p 'Kdotnet34567@' ssh -o StrictHostKeyChecking=no administrator@${module.win_worker_domain[count.index].address} 'powershell c:\\users\\administrator\\rename_win_worker${count.index}.ps1'"
     ]
     connection {
       type        = "ssh"
