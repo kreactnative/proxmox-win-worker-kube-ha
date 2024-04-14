@@ -9,3 +9,4 @@ New-NetFirewallRule -Name 'Kubelet-In-TCP' -DisplayName 'Kubelet (node)' -Enable
 Start-Service kubelet
 Start-Service kube-proxy
 kubectl get nodes -o wide
+Restart-Computer -Force

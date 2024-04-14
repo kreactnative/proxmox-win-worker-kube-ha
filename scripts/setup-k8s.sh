@@ -14,23 +14,14 @@ sudo dnf remove zram-generator-defaults -y
 swapoff -a
 sudo dnf autoremove -y
 
-modprobe overlay
 modprobe br_netfilter
 
-cat > /etc/modules-load.d/k8s.conf << EOF
-overlay
-br_netfilter
-EOF
 
 cat > /etc/sysctl.d/k8s.conf << EOF
-net.ipv4.ip_forward = 1
 net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
-net.ipv6.conf.all.forwarding=1
+net.ipv4.ip_forward = 1
 EOF
-
-sudo sysctl -w net.ipv6.conf.all.forwarding=1
-echo net.ipv6.conf.all.forwarding=1 >> /etc/sysctl.conf
 
 sysctl --system
 
@@ -39,22 +30,22 @@ sed -e '/swap/s/^/#/g' -i /etc/fstab
 free -m
 
 ### containerd
-#dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-#dnf makecache
-#dnf install -y containerd.io
+dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+dnf makecache
+dnf install -y containerd.io
 
-#mv /etc/containerd/config.toml /etc/containerd/config.toml.orig
-#containerd config default > /etc/containerd/config.toml
-#sed -i "s|SystemdCgroup = false|SystemdCgroup = true|g" /etc/containerd/config.toml
-#systemctl enable --now containerd.service
-#systemctl status containerd.service --no-pager
+mv /etc/containerd/config.toml /etc/containerd/config.toml.orig
+containerd config default > /etc/containerd/config.toml
+sed -i "s|SystemdCgroup = false|SystemdCgroup = true|g" /etc/containerd/config.toml
+systemctl enable --now containerd.service
+systemctl status containerd.service --no-pager
 ### cri-o
-VERSION=1.28
-sudo curl -L -o /etc/yum.repos.d/devel:kubic:libcontainers:stable.repo https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/CentOS_8/devel:kubic:libcontainers:stable.repo
-sudo curl -L -o /etc/yum.repos.d/devel:kubic:libcontainers:stable:cri-o:${VERSION}.repo https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable:cri-o:${VERSION}/CentOS_8/devel:kubic:libcontainers:stable:cri-o:${VERSION}.repo
-sudo dnf -y install cri-o cri-tools
-sudo systemctl enable --now crio
-sudo systemctl status crio --no-pager
+#VERSION=1.28
+#sudo curl -L -o /etc/yum.repos.d/devel:kubic:libcontainers:stable.repo https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/CentOS_8/devel:kubic:libcontainers:stable.repo
+#sudo curl -L -o /etc/yum.repos.d/devel:kubic:libcontainers:stable:cri-o:${VERSION}.repo https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable:cri-o:${VERSION}/CentOS_8/devel:kubic:libcontainers:stable:cri-o:${VERSION}.repo
+#sudo dnf -y install cri-o cri-tools
+#sudo systemctl enable --now crio
+#sudo systemctl status crio --no-pager
 
 cat > /etc/yum.repos.d/k8s.repo << EOF
 [kubernetes]

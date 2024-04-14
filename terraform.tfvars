@@ -14,8 +14,8 @@ TARGET_NODE          = "pve"
 
 # Cluster config
 MASTER_COUNT     = 1
-WORKER_COUNT     = 1
-WIN_WORKER_COUNT = 2
+WORKER_COUNT     = 3
+WIN_WORKER_COUNT = 1
 autostart        = true
 master_config = {
   memory  = "8192"
@@ -23,8 +23,8 @@ master_config = {
   sockets = 1
 }
 worker_config = {
-  memory  = "8192"
-  vcpus   = 4
+  memory  = "4096"
+  vcpus   = 2
   sockets = 1
 }
 
@@ -35,10 +35,9 @@ win_worker_config = {
 }
 
 
-linux_template_id   = "1031"
-windows_template_id = "107"
-linux_storage_name  = "local-zfs"
+linux_template_id  = "1031"
+linux_storage_name = "local-zfs"
 
 
-win_linux_template_id  = 109
+win_linux_template_id  = 110
 win_linux_storage_name = "local-zfs"

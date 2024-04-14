@@ -94,9 +94,7 @@ variable "linux_template_id" {
 variable "linux_storage_name" {
   type = string
 }
-variable "windows_template_id" {
-  type = string
-}
+
 variable "WIN_WORKER_COUNT" {
   type = number
 }

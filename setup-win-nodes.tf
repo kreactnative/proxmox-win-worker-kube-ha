@@ -35,8 +35,8 @@ resource "null_resource" "join_win_worker_node" {
   count      = length(module.win_worker_domain)
 
   provisioner "file" {
-    source      = "scripts/join_win_worker.ps1"
-    destination = "/tmp/join_win_worker.ps1"
+    source      = "scripts/start_win_worker.ps1"
+    destination = "/tmp/start_win_worker.ps1"
     connection {
       type        = "ssh"
       user        = var.user
@@ -51,7 +51,7 @@ resource "null_resource" "join_win_worker_node" {
       "sudo sshpass -p 'Kdotnet34567@' ssh -o StrictHostKeyChecking=no administrator@${module.win_worker_domain[count.index].address} 'mkdir c:\\k'",
       "sudo sshpass -p 'Kdotnet34567@' scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r /root/.kube administrator@${module.win_worker_domain[count.index].address}:/users/administrator",
       "sudo sshpass -p 'Kdotnet34567@' scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r /root/.kube/config administrator@${module.win_worker_domain[count.index].address}:/k/",
-      "sudo sshpass -p 'Kdotnet34567@' scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r /tmp/join_win_worker.ps1 administrator@${module.win_worker_domain[count.index].address}:/users/administrator"
+      "sudo sshpass -p 'Kdotnet34567@' scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r /tmp/start_win_worker.ps1 administrator@${module.win_worker_domain[count.index].address}:/users/administrator"
     ]
     connection {
       type        = "ssh"
@@ -65,7 +65,8 @@ resource "null_resource" "join_win_worker_node" {
     inline = [
       "sudo dnf install sshpass -y",
       "sleep 20",
-      "sudo sshpass -p 'Kdotnet34567@' ssh -o StrictHostKeyChecking=no administrator@${module.win_worker_domain[count.index].address} 'powershell c:\\users\\administrator\\join_win_worker.ps1 && exit 0 && exit 0'"
+      "sudo sshpass -p 'Kdotnet34567@' ssh -o StrictHostKeyChecking=no administrator@${module.win_worker_domain[count.index].address} 'powershell c:\\users\\administrator\\start_win_worker.ps1'",
+      "exit 0"
     ]
     connection {
       type        = "ssh"

@@ -5,17 +5,23 @@ resource "null_resource" "install_app" {
       chmod go-r ${path.cwd}/kube-config
       export KUBECONFIG=${path.cwd}/kube-config
       kubectl get nodes -owide
-      kubectl patch deployment calico-kube-controllers --patch-file ${path.cwd}/kubernetes/patch-calico-controller.yaml -n calico-system
-      kubectl create ns metallb-system
-      kubectl create secret generic -n metallb-system metallb-memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
-      helm repo add metallb https://metallb.github.io/metallb
-      helm repo update
-      helm upgrade --install metallb metallb/metallb -n metallb-system
-      sleep 20
-      kubectl apply -f ${path.cwd}/kubernetes/metallb/configmap.yaml
+      # install metrics-server
       kubectl apply -f  ${path.cwd}/kubernetes/metrics-server
-      kubectl patch deployment metrics-server --patch-file ${path.cwd}/kubernetes/metrics-server/patch-metrics-server.yaml -n kube-system
-      istioctl install -f ${path.cwd}/kubernetes/istio/istio-operator.yaml -y
+      # patch calico stystem
+      kubectl patch deployment calico-kube-controllers --patch-file ${path.cwd}/kubernetes/patch-calico-controller.yaml -n calico-system
+      kubectl rollout restart deployment calico-typha -n calico-system
+      kubectl rollout restart ds calico-node -n calico-system
+      kubectl delete pod --all -n calico-system
+      # metallb system
+      kubectl create ns metallb-system
+      kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
+      kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.14.4/config/manifests/metallb-native.yaml
+      kubectl patch deployment controller --patch-file ${path.cwd}/kubernetes/patch-host-network.yaml -n metallb-system
+      sleep 20
+      kubectl rollout restart ds speaker -n metallb-system
+      kubectl rollout restart deployment controller -n metallb-system
+      sleep 50
+      kubectl apply -f ${path.cwd}/kubernetes/metallb/configmap.yaml
     EOT
   }
 }
